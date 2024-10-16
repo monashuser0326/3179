@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.1.0/build/pure-min.css" />
+    <title>Bushfire in Australia Visualisation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #b22222;
+            color: white;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        .introduction {
+            margin-top: 40px;
+            margin-bottom: 80px;
+        }
+
+        .pure-g {
+            margin: 20px 0;
+            align-items: center;
+        }
+
+        .pure-g [class*="pure-u"] {
+            padding: 10px;
+        }
+
+        h3 {
+            margin-top: 20px;
+        }
+
+        .visual-section {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 20px;
+            margin-bottom: 60px;
+        }
+
+        .visual-section .description {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .visual-section .visual {
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Bushfires in Australia</h1>
+    </header>
+
+
+    <div class="introduction">
+        <h2 style="color: #b22222;">Introduction</h2>
+        <p>Bushfires have long been a significant environmental and social concern, especially in Australia,
+            a country known for its vast bushlands and arid landscapes. With its unique climate and vegetation,
+            Australia is prone to intense and frequent bushfires, which pose a threat to ecosystems, human lives,
+            and infrastructure. The growing impact of climate change has further heightened the frequency and severity
+            of these fires, making the need for effective monitoring and response strategies more critical than ever.
+            This visualisation
+            is aimed to provide a clear look of bushfires happened in Australia that are detected by NASA satellites
+            around the summer period in 2019.
+        </p>
+    </div>
+
+    <!-- Top Row: Map -->
+    <div class="visual-section">
+        <div class="description">
+            <h2 style="color: #b22222;">Distribution of Bushfires</h2>
+            <p>The geographic map illustrates the spatial distribution of bushfires across Australia, highlighting areas
+                affected by
+                varying levels of fire activity. Each circle represents detected bushfires, with the size of the circle
+                indicating
+                the Fire Radiative Power (FRP) in megawatts (MW). Larger circles signify higher FRP, providing insight
+                into the
+                intensity of fire activity at different locations. The heatmap coloring conveys the confidence level
+                (0-100%) of
+                the fire detection, where darker shades represent higher confidence that a fire was present.</p>
+
+            <p>Around this period of time, there is significant clustering observed along the eastern coast. The high
+                fire radiative
+                power in certain areas, combined with high confidence values, underscores the severity and prevalence of
+                bushfires in
+                regions prone to hot and dry conditions.</p>
+        </div>
+        <div class="visual">
+            <div id="map"></div>
+        </div>
+    </div>
+
+
+
+    <!-- Combined Visual Section -->
+    <div class="visual-section">
+        <div class="description">
+            <h2 style="color: #b22222;">Distribution by Region: Eastern Australia Focus</h2>
+            <p>The bar chart provides an overview of the regional distribution of bushfires across Australia,
+                categorised into the
+                West (longtitude < 130), Middle (130 < longtitude < 145), and East (longtitude> 145). It is evident that
+                    the eastern region experiences significantly more bushfires compared to
+                    the central and western areas.</p>
+
+            <p>The geographic map on the right zooms in on eastern Australia, providing a closer look at the
+                concentration of bushfire
+                events. The East, with its dense vegetation and often dry, hot conditions, creates an
+                environment conducive to the spread of fires, making it the most affected region during the bushfire
+                season. This is proved by the size
+                of the bubbles on the east, as they are tend to be larger and the confidence of each bushfire is high.
+            </p>
+        </div>
+        <div class="visual">
+            <div id="bar2"></div> 
+        </div>
+        <div class="visual">
+            <div id="map2"></div> 
+        </div>
+    </div>
+
+    <!-- Middle Row: Scatter Plot -->
+    <div class="visual-section">
+        <div class="description">
+            <h2 style="color: #b22222;">Fire Radiative Power, Brightness, and Confidence</h2>
+            <p>The scatter plot illustrates the relationship between Fire Radiative Power (FRP), brightness, and
+                confidence level in
+                bushfire detection. The positive trend seen in the plot suggests that as FRP increases, the brightness
+                also tends to
+                rise, indicating more intense fires. Higher brightness makes it easier for satellites to detect and
+                confirm bushfire
+                events, leading to higher confidence in the accuracy of the recorded data. </p>
+
+            <p>When brightness values are around 300, the confidence level tends to be lower. This may be due to the
+                conditions under
+                which the fire is being detected, such as daytime, when background brightness can make it harder for
+                satellites to
+                distinguish fires from their surroundings. Additionally, lower FRP values indicate smaller fires, which
+                are inherently
+                more challenging to detect and accurately confirm. These factors contribute to the variability in
+                confidence levels,
+                emphasizing the limitations of satellite-based detection for less intense or obscured fire events.</p>
+        </div>
+        <div class="visual">
+            <div id="scatter"></div>
+        </div>
+    </div>
+
+    <!-- Bottom Row: Bar Chart -->
+    <div class="visual-section">
+        <div class="visual">
+            <div id="bar"></div>
+        </div>
+        <div class="description">
+            <h2 style="color: #b22222;">Day vs. Night Bushfire Activity Over Time</h2>
+            <p>The stacked bar chart visualises the daily bushfire occurrences over a specific time period,
+                distinguishing between daytime (yellow) and night time (brown) fires. The majority of bushfires are seen
+                during the day, as indicated by the predominance of yellow bars, especially in early September when a
+                sharp increase in fire activity is observed.</p>
+
+            <p>The peak in early September aligns with Australia's summer season, characterised by extremely dry and hot
+                conditions that significantly increase the likelihood of fires. The combination of daytime heat and dry
+                vegetation creates a high-risk environment, which is reflected in the increased fire activity during
+                this time.</p>
+        </div>
+    </div>
+
+    <div class="introduction">
+        <h2 style="color: #b22222;">Conclusion: Understanding Bushfire Dynamics in Australia</h2>
+        <p>
+            The Australia summer brings dry, hot conditions that significantly increase the risk of bushfires. During
+            this period, high temperatures and low humidity create an environment where vegetation becomes extremely dry
+            and highly flammable. Additionally, strong summer winds can spread fires rapidly, turning small ignitions
+            into uncontrollable blazes. This combination of factors — intense heat, dry vegetation, and windy
+            conditions, converges to create an environment where bushfires are not only likely but often inevitable.
+        </p>
+
+        <p>The visualisations presented provide a comprehensive understanding of the dynamics of bushfires in Australia,
+            highlighting regional distributions, intensity, and temporal patterns.By understanding these dynamics, we
+            can better prepare for and mitigate the impacts of bushfires, ensuring more effective response strategies
+            and resource allocation in high-risk areas. </p>
+    </div>
+
+
+    <footer>
+        <p style="text-align: center; margin-top: 40px; font-size: 0.9em; color: #555;">Data Source: NASA's Fire
+            Information for Resource Management System (FIRMS) | Created by: [Ziyang Zhao] | October 2024</p>
+    </footer>
+
+    <script src="./map.js"></script>
+    <script src="./eastern_focus_map.js"></script>
+    <script src="./fire_region_bar.js"></script>
+    <script src="./frp_brightness_scatter.js"></script>
+    <script src="./day_night_stackedbar.js"></script>
+
+</body>
+
+</html>
